@@ -70,6 +70,7 @@ def run_benchmark(
     Benchmarks each audio sample with the specified STT services,
     measuring Time To First Byte (TTFB) using Pipecat's MetricsFrame.
     """
+    # print(STT_SERVICES)
     console.print("\n[bold blue]STT Benchmark - Run Benchmarks[/bold blue]\n")
 
     # Parse and validate services

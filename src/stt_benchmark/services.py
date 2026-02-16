@@ -130,7 +130,7 @@ def create_deepgram() -> FrameProcessor:
             model="nova-3-general",
             smart_format=False,
             profanity_filter=False,
-            language=Language.EN,
+            language=Language.HI,
         ),
     )
 
@@ -298,7 +298,7 @@ def create_soniox() -> FrameProcessor:
         api_key=_get_env("SONIOX_API_KEY"),
         params=SonioxInputParams(
             model="stt-rt-v4",
-            language_hints=[Language.EN],
+            language_hints=[Language.HI_IN],
             language_hints_strict=True,
         ),
         vad_force_turn_endpoint=True,

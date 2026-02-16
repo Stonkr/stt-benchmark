@@ -49,11 +49,7 @@ def download(
     console.print(f"Output: {config.audio_dir}\n")
 
     async def run():
-        downloader = DatasetDownloader(
-            num_samples=num_samples,
-            seed=seed,
-            offset=offset,
-        )
+        downloader = DatasetDownloader(num_samples=num_samples, seed=seed, offset=offset)
 
         with Progress(
             TextColumn("[progress.description]{task.description}"),

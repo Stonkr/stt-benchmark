@@ -2,6 +2,12 @@
 
 A framework for benchmarking Speech-to-Text services with TTFS (Time To Final Segment) latency and Semantic WER (Word Error Rate) accuracy measurement.
 
+## Installing Custom STT 
+- uv add pip
+- uv pip install "../../../../ringg/dv-pipecat[daily,cartesia,openai,silero,deepgram,azure,elevenlabs,noisereduce,soundfile,speechmatics,gladia,google,groq,sentry,remote-smart-turn,anthropic,sarvam,local-smart-turn-v3]"
+- if you make any changes in the src folder install the changes by doing uv pip install -e .
+
+
 ## Results Summary
 
 Benchmark results on 1000 samples from the `pipecat-ai/smart-turn-data-v3.1-train` dataset.

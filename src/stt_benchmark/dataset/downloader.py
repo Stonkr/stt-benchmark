@@ -57,11 +57,17 @@ class DatasetDownloader:
         seed: int = 42,
         offset: int = 0,
         config: BenchmarkConfig | None = None,
+        language="hin",
+        apply_synthetic_filter=False,
+        synthetic_filter=True,
     ):
         self.config = config or get_config()
         self.num_samples = num_samples
         self.seed = seed
         self.offset = offset
+        self.language = language
+        self.apply_synthetic_filter = apply_synthetic_filter
+        self.synthetic_filter = synthetic_filter
         self.db = Database()
 
     async def download_and_prepare(
@@ -102,10 +108,18 @@ class DatasetDownloader:
         )
 
         if progress_callback:
-            progress_callback(1, 4, "Filtering for English, non-synthetic samples...")
+            if self.apply_synthetic_filter:
+                progress_callback(1, 4, f"Filtering for {self.language}, non-synthetic samples...")
+            else:
+                progress_callback(1, 4, f"Filtering for {self.language} samples...")
 
-        # Filter for English, non-synthetic samples
-        filtered = dataset.filter(lambda x: x["language"] == "eng" and x["synthetic"] is False)
+        # Filter based on language and optionally synthetic flag
+        if self.apply_synthetic_filter:
+            filtered = dataset.filter(
+                lambda x: x["language"] == self.language and x["synthetic"] == self.synthetic_filter
+            )
+        else:
+            filtered = dataset.filter(lambda x: x["language"] == self.language)
 
         if progress_callback:
             progress_callback(2, 4, "Shuffling and selecting samples...")

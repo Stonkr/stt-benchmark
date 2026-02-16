@@ -327,6 +327,25 @@ def create_whisper() -> FrameProcessor:
     )
 
 
+def create_ringg() -> FrameProcessor:
+    from pipecat.services.ringg.stt import RinggParrotSTTService
+    from pipecat.services.ringg.stt import RinggParrotInputParams
+    from pipecat.services.ringg.stt import PredictionMethod
+
+    return RinggParrotSTTService(
+        url="ws://13.234.40.75:8888/v1/audio/stream",
+        sample_rate=16000,
+        params=RinggParrotInputParams(
+            api_key=_get_env("RINGG_PARROT_STT_API"),
+            encoding="int16",
+            language="hi",
+            punctuate=False,
+            partial_chunk_ms=400,
+            prediction_method=PredictionMethod.ON_FINAL,
+        ),
+    )
+
+
 # =============================================================================
 # SERVICE REGISTRY
 # =============================================================================
@@ -419,6 +438,10 @@ STT_SERVICES: dict[str, ServiceDefinition] = {
     "whisper": ServiceDefinition(
         factory=create_whisper,
         required_env_vars=[],  # Local model, no API key needed
+    ),
+    "ringg": ServiceDefinition(
+        factory=create_ringg,
+        required_env_vars=["RINGG_PARROT_STT_API"],  # Local model, no API key needed
     ),
 }
 
